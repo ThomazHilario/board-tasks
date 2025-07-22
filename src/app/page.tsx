@@ -16,7 +16,7 @@ export default function Home() {
           className={style.imageArticle}
           src={HeroImage} 
           alt="Imagem de ilustração de um sistema de tarefas" 
-          width={320}
+          width={300}
           height={200}
         />
 

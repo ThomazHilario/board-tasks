@@ -16,9 +16,7 @@
     /* Image Article */
     .imageArticle{
       transition: 0.5s ease-in-out;
-      @media screen and (min-width: 400px){
-        width: 350px;
-      }
+      object-fit: contain;
     }
 
     /* Description Article */
