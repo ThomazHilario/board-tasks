@@ -1,22 +1,30 @@
 .header{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 10vh;
     background-color: #1b1a1a;
     color: white;
+    padding: 0 0.8rem;
 
-    .title{
+    .logo{
+      text-decoration: none;
+      color: white;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.1rem;
-      font-size: 2rem;
-      font-weight: 600;
+      gap: 0.2rem;
 
+      .title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.1rem;
+        font-size: 2rem;
+        font-weight: 600;
+      }
       .plus{
-        color: #f83b3b;
-        font-size: 1.5rem;
+          color: #f83b3b;
+          font-size: 1.8rem;
       }
     }
 
@@ -30,4 +38,21 @@
       font-size: 12px;
       cursor: pointer;
     }
+
+    
+}
+.dialogContent{
+  position: absolute;
+  top: 9%;
+  right: 1%;
+  padding: 0.5rem;
+  color: white;
+  background-color: #302e2e;
+  height: 10rem;
+  width: 20rem;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
