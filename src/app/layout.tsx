@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { getServerSession } from "next-auth";
 import "./globals.css";
 import { Header } from "@/Components/Header/header";
+import SessionProvider from "@/Components/SessionComponent/index";
+
+// session
+const session = await getServerSession();
 
 const poppinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -22,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${poppinsSans.variable}`}>
-        <Header/>
+        <SessionProvider session={session}>
+          <Header/>
           {children}
+        </SessionProvider>
       </body>
     </html>
   );

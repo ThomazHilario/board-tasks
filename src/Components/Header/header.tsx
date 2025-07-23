@@ -1,12 +1,25 @@
 "use client"
+
 // Components
 import Link from 'next/link'
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogPortal, DialogDescription } from '@radix-ui/react-dialog'
 import { signIn } from 'next-auth/react'
+
+// Dialog Components
+import { 
+    Dialog, 
+    DialogTrigger, 
+    DialogContent, 
+    DialogTitle, 
+    DialogPortal, 
+    DialogDescription 
+} from '@radix-ui/react-dialog'
+import { DialogHeader } from '../ui/dialog'
+
+// Icon
+import { IoLogoDiscord } from "react-icons/io5";
 
 // Css style
 import style from './header.module.css'
-import { DialogHeader } from '../ui/dialog'
 
 export const Header = () => {
 
@@ -26,12 +39,19 @@ export const Header = () => {
                 
                 <DialogPortal>
                     <DialogContent className={style.dialogContent} aria-describedby='testes'>
-                        <DialogHeader>
-                            <DialogTitle>Registrar-se</DialogTitle>
+                        <DialogHeader className={style.dialogHeader}>
+                            <DialogTitle className={style.dialogTitle}>Registrar-se</DialogTitle>
                             <DialogDescription hidden>Dialog de login ou registro do usuário</DialogDescription>
+                            
+                            {/* Account login */}                               
+                                <button 
+                                    className={style.buttonEnterInMyAccount}
+                                    onClick={() => signIn('discord')}
+                                >
+                                    <IoLogoDiscord size={25} color='#7289da'/>
+                                    Entrar com Discord
+                                </button>
                         </DialogHeader>
-
-                        <button onClick={() => signIn('discord')}>Entrar com Discord</button>
                     </DialogContent>
                 </DialogPortal>
             </Dialog>

@@ -43,16 +43,46 @@
 }
 .dialogContent{
   position: absolute;
-  top: 9%;
-  right: 1%;
+  top: 10%;
+  right: 0%;
   padding: 0.5rem;
   color: white;
   background-color: #302e2e;
   height: 10rem;
-  width: 20rem;
+  width: 100%;
   border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  transition: 0.5s ease-in-out;
+
+  @media screen and (min-width: 768px) {
+    width: 20rem;
+    top: 9%;
+    right: 1%;
+  }
+
+  .dialogHeader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .dialogTitle{
+      text-align: center;
+    }
+
+    .buttonEnterInMyAccount{
+      width: 80%;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      border: 1px solid white;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+    }
+  }
 }
