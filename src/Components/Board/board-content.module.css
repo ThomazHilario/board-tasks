@@ -1,0 +1,70 @@
+.createTaskContainer{
+    display: block;
+    margin: auto;
+    width: 80%;
+    color: white;
+
+    h2{
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .formAddTask{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        textarea {
+            width: 100%;
+            resize: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgb(46, 46, 46);
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        div{
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        button{
+            width: 100%;
+            background-color: rgb(86, 86, 231);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.tasksSectionContainer{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 90%;
+    gap: 0.5rem;
+
+    h2{
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    ul {
+        width: 80%;
+
+        li{
+            border: 2px solid black;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+    }
+}
