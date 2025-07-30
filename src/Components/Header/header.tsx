@@ -42,7 +42,6 @@ export const Header = async () => {
                     </DialogContent>
                 </DialogPortal>
             </Dialog>
-            
         </header>
     )
 }
