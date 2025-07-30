@@ -27,10 +27,8 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${poppinsSans.variable}`}>
-        <SessionProvider session={session}>
           <Header/>
           {children}
-        </SessionProvider>
       </body>
     </html>
   );

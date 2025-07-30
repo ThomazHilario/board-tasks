@@ -13,12 +13,7 @@ export const authOptions  = {
       },  
 
     }),
-  ],
-  callbacks: {
-    async redirect() {
-      return '/board';
-    },
-  },  
+  ], 
   secret: process.env.NEXTAUTH_SECRET,
 
 };
