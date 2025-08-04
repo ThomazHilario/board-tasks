@@ -7,7 +7,7 @@ import { ButtonHeaderProps } from '@/interface/Header/button-interface';
 
 export const Button = ({ className, isLogged, icon, value }: ButtonHeaderProps) => {
         const handleSignIn = () => {
-        signIn('discord', { callbackUrl: '/board' })
+        signIn('discord', { callbackUrl: '/board', redirect: true})
     }
 
     const handleSignOut = () => {

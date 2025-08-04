@@ -6,18 +6,15 @@ import { FormEvent, useState } from "react"
 // Components
 import { TasksSection } from "../tasksSection"
 
+// Interface
+import { taskProps } from "@/interface/Board/Task/task-interface"
+
 // Css style
 import style from '../board-content.module.css'
-import { comment } from "postcss";
 
-export const BoardContent = () => {
+export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
 
-    const [tasks, setTasks] = useState([{
-        id: '1',
-        value: 'Task 1',
-        isPublic: true,
-        comments: []
-    }])
+    const [tasks, setTasks] = useState(tasksUser)
 
     // input value
     const [inputValue, setInputValue] = useState('')
@@ -43,6 +40,7 @@ export const BoardContent = () => {
         <>
             <article className={style.createTaskContainer}>
                 <h2>Qual a sua tarefa ?</h2>
+
                 <form className={style.formAddTask} onSubmit={(e) => handleAddTask(e)}>
                     <textarea 
                         rows={5}
@@ -57,6 +55,7 @@ export const BoardContent = () => {
                         onChange={(e) => setTaskIsPublic(e.target.checked)}/>
                         <label>Deixar tarefa pública</label>
                     </div>
+                    
                     <button>Registrar</button>
                 </form>
             </article>
