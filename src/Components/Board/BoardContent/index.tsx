@@ -36,6 +36,10 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
         ])
     }
 
+    const handleRemoveTask = (id:string) => {
+        setTasks(tasks.filter(task => task.id !== id))
+    }
+
     return(
         <>
             <article className={style.createTaskContainer}>
@@ -60,7 +64,10 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
                 </form>
             </article>
 
-            <TasksSection tasks={tasks}/>
+            <TasksSection 
+                tasks={tasks}
+                handleRemoveTask={handleRemoveTask}
+            />
         </>
     )
 }
