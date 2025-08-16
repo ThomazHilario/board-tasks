@@ -34,6 +34,8 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
             },
             ...tasks
         ])
+
+        setInputValue('')
     }
 
     const handleRemoveTask = (id:string) => {

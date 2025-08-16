@@ -6,12 +6,12 @@ import mock from '@/mocks/falsedata.json'
 
 // Components
 import { TaskComponent } from "@/Components/Board/Task/index";
+import { Container } from "@/Components/ui/Container/Container";
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface";
 
-// Css style
-import style from './task.module.css'
+
 
 export default async function Task() {
     
@@ -26,8 +26,8 @@ export default async function Task() {
     const tasksUser = await new Promise<taskProps[]>(resolve => setTimeout(() => resolve(mock), 500));
 
     return(
-        <section className={style.taskContainer}>
+        <Container className="bg-white">
             <TaskComponent tasks={tasksUser} />
-        </section>
+        </Container>
     )
 }

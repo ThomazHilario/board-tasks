@@ -20,17 +20,27 @@ export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
     const [taskValue, setTaskValue] = useState(task?.value)
 
     return (
-        <form>
-            <textarea 
-                name="task" 
-                id="task" 
-                cols={30} 
-                rows={10}
-                value={taskValue}
-                onChange={(e) => setTaskValue(e.target.value)}
-            />
+        <>
+            <form>
+                <textarea 
+                    name="task" 
+                    id="task" 
+                    cols={30} 
+                    rows={10}
+                    value={taskValue}
+                    onChange={(e) => setTaskValue(e.target.value)}
+                />
 
-            <button>Edit Task</button>
-        </form>
+                <button>Edit Task</button>
+            </form>
+
+            <section>
+                <ul>
+                    {task?.comments.length && task.comments.map((comment, index) => (
+                        <li key={index}>{comment.comment}</li>
+                    ))}
+                </ul>
+            </section>
+        </>
     )
 }

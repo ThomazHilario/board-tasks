@@ -12,9 +12,7 @@ import mock from '@/mocks/falsedata.json'
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface";
-
-// Css style
-import style from './board.module.css'
+import { Container } from "@/Components/ui/Container/Container";
 
 export default async function Board() {
 
@@ -31,8 +29,8 @@ export default async function Board() {
     }
 
     return (
-        <section className={style.boardContainer}>
+        <Container>
             <BoardContent tasksUser={tasksUser} />
-        </section>
+        </Container>
     );
 }
