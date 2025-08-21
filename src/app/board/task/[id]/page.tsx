@@ -11,8 +11,6 @@ import { Container } from "@/Components/ui/Container/Container";
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface";
 
-
-
 export default async function Task() {
     
     // Verify session

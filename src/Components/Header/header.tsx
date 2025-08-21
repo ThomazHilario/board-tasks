@@ -20,10 +20,12 @@ import style from './header.module.css'
 export const Header = async () => {
     const data = await getServerSession()
 
+    const hrefValue = data?.user ? '/board' : '/'
+
     return (
         <header className={style.header}>
 
-            <Link href='/' className={style.logo}>
+            <Link href={hrefValue} className={style.logo}>
                 <h1 className={style.title}>
                     Tarefas
                 </h1>

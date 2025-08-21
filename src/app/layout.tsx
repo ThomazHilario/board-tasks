@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/Components/Header/header";
+import { lazy, Suspense } from "react";
+
+const Auth = lazy(() => import("@/Context/AuthProvider"))
 
 const poppinsSans = Poppins({
   variable: "--font-poppins-sans",
@@ -22,10 +25,14 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${poppinsSans.variable}`}>
-          <Header/>
-          <main>
-            {children}
-          </main>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <Auth>
+              <Header/>
+              <main>
+                {children}
+              </main>
+          </Auth>
+        </Suspense>
       </body>
     </html>
   );

@@ -15,7 +15,7 @@ export const SignOutDialog = ({ data }: any) => {
             <DialogTitle className={style.dialogTitleProfile}>
                 <img 
                     className={style.imageProfile}
-                    src={data?.user?.image!} 
+                    src={data?.user?.image} 
                     alt="Imagem de perfil" 
                     width={50} 
                     height={50}

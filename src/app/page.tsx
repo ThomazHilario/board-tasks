@@ -7,16 +7,8 @@ import HeroImage from '../..//public/imagens/hero.png'
 
 // Css style
 import style from './page.module.css'
-import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 
-export default async function Home() {
-
-  const session = await getServerSession()
-
-  if(session){
-    redirect('/board')
-  }
+export default function Home() {
 
   return (
     <section className={style.home}>
