@@ -7,6 +7,9 @@ import { useState } from "react"
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface"
 
+// Style
+import style from '../board-content.module.css'
+
 
 export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
 
@@ -20,19 +23,21 @@ export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
     const [taskValue, setTaskValue] = useState(task?.value)
 
     return (
-        <>
-            <form>
-                <textarea 
-                    name="task" 
-                    id="task" 
-                    cols={30} 
-                    rows={10}
-                    value={taskValue}
-                    onChange={(e) => setTaskValue(e.target.value)}
-                />
+        <section className="w-full h-full flex items-center flex-col gap-5">
+            <article className={style.formEditContainer}>
+                <form>
+                    <textarea 
+                        name="task" 
+                        id="task" 
+                        cols={10} 
+                        rows={5}
+                        value={taskValue}
+                        onChange={(e) => setTaskValue(e.target.value)}
+                    />
 
-                <button>Edit Task</button>
-            </form>
+                    <button>Edit Task</button>
+                </form>
+            </article>
 
             <section>
                 <ul>
@@ -41,6 +46,6 @@ export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
                     ))}
                 </ul>
             </section>
-        </>
+        </section>
     )
 }
