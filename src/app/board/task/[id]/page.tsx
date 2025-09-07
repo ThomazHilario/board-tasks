@@ -25,7 +25,7 @@ export default async function Task() {
 
     return(
         <Container className="bg-white">
-            <TaskComponent tasks={tasksUser} />
+            <TaskComponent tasks={tasksUser} user={session.user} />
         </Container>
     )
 }

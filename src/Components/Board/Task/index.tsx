@@ -6,12 +6,17 @@ import { useState } from "react"
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface"
+interface UserProps {
+    name?: string,
+    email?: string,
+    image?: string
+}
 
 // Style
 import style from '../board-content.module.css'
 
 
-export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
+export const TaskComponent = ({tasks, user}: {tasks: taskProps[], user: UserProps}) => {
 
     // Get params
     const params = useParams()
@@ -21,6 +26,8 @@ export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
 
     // State 
     const [taskValue, setTaskValue] = useState(task?.value)
+
+    const thisTaskIsLoggedUser = user.name === task?.author
 
     return (
         <section className="w-full h-full flex items-center flex-col gap-5">
@@ -35,7 +42,7 @@ export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
                         onChange={(e) => setTaskValue(e.target.value)}
                     />
 
-                    <button>Edit Task</button>
+                    {thisTaskIsLoggedUser && <button>Edit Task</button>}
                 </form>
             </article>
 
