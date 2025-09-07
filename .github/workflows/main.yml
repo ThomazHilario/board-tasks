@@ -1,0 +1,22 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    branches: [develop]
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checar o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar dependências
+        run: npm install openai @octokit/rest
+
+      - name: Rodar análise da IA
+        run: node scripts/ai-review.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
