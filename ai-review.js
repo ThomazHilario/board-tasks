@@ -28,47 +28,53 @@ async function run() {
     return;
   }
 
-  let diffs = "";
+  let combinedDiffs = [];
   for (const file of relevantFiles) {
     try {
       const diff = execSync(`git diff origin/${baseBranch} -- ${file}`).toString();
       if (diff.trim()) {
-        diffs += `\n\n### Arquivo: ${file}\n${diff}`;
+        const blocks = diff.split("\n@@");
+        blocks.forEach((block, idx) => {
+          combinedDiffs.push(`---- BLOCO DE MUDANÇA ${idx + 1} ----\n${block.trim()}`);
+        });
       }
     } catch (err) {
       console.error(`Erro ao gerar diff para ${file}`, err);
     }
   }
 
-  if (!diffs) {
+  if (!combinedDiffs.length) {
     console.log("Nenhum diff relevante encontrado.");
     return;
   }
 
-  // Chamada para a IA
+  const diffsText = combinedDiffs.join("\n\n");
+
   const response = await openai.chat.completions.create({
     model: "gpt-4.1",
     messages: [
       {
         role: "system",
         content: `
-Você é um revisor de código experiente em React (TSX/JSX). 
-Analise apenas as alterações fornecidas e comente:
-- Legibilidade e clareza
-- Boas práticas de React/TypeScript
-- Possíveis impactos em performance
-- Sugestões de melhoria
-        `
+Você é um revisor de código especialista em React (TSX/JSX).
+Analise cuidadosamente **todas as alterações** reunidas como se fossem um único arquivo.
+Explique cada bloco de mudança separado pelo delimitador "---- BLOCO DE MUDANÇA <n> ----".
+Para cada bloco, faça:
+1. O que foi alterado ou adicionado
+2. Sugestões de melhoria
+3. Possíveis impactos de performance ou bugs
+      `
       },
-      { role: "user", content: `Aqui estão as mudanças:\n${diffs}` }
-    ]
+      { role: "user", content: diffsText }
+    ],
   });
 
   const review = response.choices[0].message.content;
 
+  // Posta comentário no PR
   await octokit.issues.createComment({
-    owner: "SEU_USUARIO", 
-    repo: "SEU_REPO", 
+    owner: "SEU_USUARIO",   
+    repo: "SEU_REPO",       
     issue_number: parseInt(process.env.GITHUB_REF.split("/").pop(), 10),
     body: review,
   });
