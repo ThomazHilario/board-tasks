@@ -2,6 +2,7 @@ name: AI Code Review
 
 on:
   pull_request:
+    branches: [develop]
     types: [opened, synchronize]
 
 jobs:
