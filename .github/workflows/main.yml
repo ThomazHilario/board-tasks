@@ -16,7 +16,7 @@ jobs:
         run: npm install openai @octokit/rest
 
       - name: Rodar análise da IA
-        run: node $GITHUB_WORKSPACE/scripts/ai-review.js
+        run: node ai-review.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
