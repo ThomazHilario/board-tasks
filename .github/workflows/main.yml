@@ -8,15 +8,19 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checar o repositório
+      - name: Checkout repositório
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
 
       - name: Instalar dependências
         run: npm install openai @octokit/rest
 
       - name: Rodar análise da IA
-        run: node ai-review.js
+        run: node ./scripts/ai-review.js
+        working-directory: ${{ github.workspace }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
