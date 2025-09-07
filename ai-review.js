@@ -6,23 +6,25 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 async function run() {
-  // pega a branch base do PR dinamicamente
   const baseBranch = process.env.GITHUB_BASE_REF || "develop";
 
-  // Pegar arquivos alterados no PR
   let changedFiles;
   try {
-    changedFiles = execSync(`git diff --name-only origin/${baseBranch}`).toString().split("\n");
+    changedFiles = execSync(
+      `git diff --name-only --diff-filter=AM origin/${baseBranch}`
+    )
+      .toString()
+      .split("\n")
+      .filter(Boolean);
   } catch (err) {
-    console.error("Erro ao buscar diffs do git:", err.message);
+    console.error("Erro ao buscar arquivos modificados:", err.message);
     return;
   }
 
-  // Filtrar apenas tsx e jsx
   const relevantFiles = changedFiles.filter(f => f.endsWith(".tsx") || f.endsWith(".jsx"));
 
   if (!relevantFiles.length) {
-    console.log("Nenhum arquivo TSX/JSX modificado. Pulando análise.");
+    console.log("Nenhum arquivo TSX/JSX modificado ou adicionado. Pulando análise.");
     return;
   }
 
@@ -43,7 +45,7 @@ async function run() {
     return;
   }
 
-  // Solicitação à IA
+  // Chamada para a IA
   const response = await openai.chat.completions.create({
     model: "gpt-4.1",
     messages: [
@@ -51,24 +53,22 @@ async function run() {
         role: "system",
         content: `
 Você é um revisor de código experiente em React (TSX/JSX). 
-Analise as alterações e comente:
-- Legibilidade e clareza do código
-- Boas práticas de React e TypeScript
-- Impacto em performance (ex.: re-renderizações desnecessárias, hooks mal utilizados, etc.)
-- Possíveis problemas de segurança ou bugs
-Sugira melhorias claras e práticas quando possível.
+Analise apenas as alterações fornecidas e comente:
+- Legibilidade e clareza
+- Boas práticas de React/TypeScript
+- Possíveis impactos em performance
+- Sugestões de melhoria
         `
       },
       { role: "user", content: `Aqui estão as mudanças:\n${diffs}` }
-    ],
+    ]
   });
 
   const review = response.choices[0].message.content;
 
-  // Postar comentário no PR
   await octokit.issues.createComment({
-    owner: "SEU_USUARIO",   // substitua
-    repo: "SEU_REPO",       // substitua
+    owner: "SEU_USUARIO", 
+    repo: "SEU_REPO", 
     issue_number: parseInt(process.env.GITHUB_REF.split("/").pop(), 10),
     body: review,
   });
