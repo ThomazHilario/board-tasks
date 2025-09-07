@@ -6,12 +6,22 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 async function run() {
-  const prNumber = process.env.GITHUB_REF.split("/").pop();
+  // pega a branch base do PR dinamicamente
+  const baseBranch = process.env.GITHUB_BASE_REF || "develop";
 
-  const changedFiles = execSync("git diff --name-only origin/main").toString().split("\n");
+  // Pegar arquivos alterados no PR
+  let changedFiles;
+  try {
+    changedFiles = execSync(`git diff --name-only origin/${baseBranch}`).toString().split("\n");
+  } catch (err) {
+    console.error("Erro ao buscar diffs do git:", err.message);
+    return;
+  }
+
+  // Filtrar apenas tsx e jsx
   const relevantFiles = changedFiles.filter(f => f.endsWith(".tsx") || f.endsWith(".jsx"));
 
-  if (relevantFiles.length === 0) {
+  if (!relevantFiles.length) {
     console.log("Nenhum arquivo TSX/JSX modificado. Pulando análise.");
     return;
   }
@@ -19,7 +29,7 @@ async function run() {
   let diffs = "";
   for (const file of relevantFiles) {
     try {
-      const diff = execSync(`git diff origin/main -- ${file}`).toString();
+      const diff = execSync(`git diff origin/${baseBranch} -- ${file}`).toString();
       if (diff.trim()) {
         diffs += `\n\n### Arquivo: ${file}\n${diff}`;
       }
@@ -33,6 +43,7 @@ async function run() {
     return;
   }
 
+  // Solicitação à IA
   const response = await openai.chat.completions.create({
     model: "gpt-4.1",
     messages: [
@@ -54,10 +65,11 @@ Sugira melhorias claras e práticas quando possível.
 
   const review = response.choices[0].message.content;
 
+  // Postar comentário no PR
   await octokit.issues.createComment({
-    owner: "SEU_USUARIO",  
-    repo: "SEU_REPO", 
-    issue_number: prNumber,
+    owner: "SEU_USUARIO",   // substitua
+    repo: "SEU_REPO",       // substitua
+    issue_number: parseInt(process.env.GITHUB_REF.split("/").pop(), 10),
     body: review,
   });
 
