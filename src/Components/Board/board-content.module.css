@@ -112,3 +112,53 @@
         }
     }    
 }
+
+.formAddCommentContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+
+    form{
+        margin-top: 2rem;
+        width: 80%;
+        gap: 0.5rem;
+        /* Input textarea */
+        textarea {
+            width: 100%;
+            resize: none;
+            border-radius: 0.5rem;
+            background-color: rgba(61, 61, 61, 0.536);
+            padding: 0.5rem;
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        button{
+            width: 100%;
+            background-color: rgb(86, 86, 231);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+    }    
+}
+
+.commentsContainer{
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.0rem;
+    width: 80%;
+
+    li{
+        border: 2px solid black;
+        width: 100%;
+        border-radius: 0.2rem;
+        padding: 0.5rem;
+    }
+}
