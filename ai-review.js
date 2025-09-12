@@ -73,8 +73,8 @@ Para cada bloco, faça:
 
   // Posta comentário no PR
   await octokit.issues.createComment({
-    owner: "SEU_USUARIO",   
-    repo: "SEU_REPO",       
+    owner: "ThomazHilario",   
+    repo: "board-tasks",       
     issue_number: parseInt(process.env.GITHUB_REF.split("/").pop(), 10),
     body: review,
   });
