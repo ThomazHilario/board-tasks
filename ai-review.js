@@ -51,7 +51,7 @@ async function run() {
   const diffsText = combinedDiffs.join("\n\n");
 
   const response = await openai.chat.completions.create({
-    model: "gpt-4.1",
+    model: "gpt-4.1-nano",
     messages: [
       {
         role: "system",
