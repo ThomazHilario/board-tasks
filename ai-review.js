@@ -63,7 +63,7 @@ Para cada bloco, faça:
 1. O que foi alterado ou adicionado
 2. Sugestões de melhoria
 3. Possíveis impactos de performance ou bugs
-      `
+        `
       },
       { role: "user", content: diffsText }
     ],
@@ -71,11 +71,20 @@ Para cada bloco, faça:
 
   const review = response.choices[0].message.content;
 
-  // Posta comentário no PR
+  // 🔍 Extração segura do número da PR
+  const ref = process.env.GITHUB_REF || "";
+  const match = ref.match(/refs\/pull\/(\d+)\/merge/);
+  const issueNumber = match ? parseInt(match[1], 10) : null;
+
+  if (!issueNumber) {
+    console.error("Número da issue não encontrado. Verifique GITHUB_REF.");
+    process.exit(1);
+  }
+
   await octokit.issues.createComment({
-    owner: "ThomazHilario",   
-    repo: "board-tasks",       
-    issue_number: parseInt(process.env.GITHUB_REF.split("/").pop(), 10),
+    owner: "ThomazHilario",
+    repo: "board-tasks",
+    issue_number: issueNumber,
     body: review,
   });
 
