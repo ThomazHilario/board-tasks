@@ -2,7 +2,7 @@
 
 // Next
 import { useParams } from "next/navigation"
-import { useState } from "react"
+import { FormEvent, useCallback, useState } from "react"
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface"
@@ -17,14 +17,28 @@ export const TaskComponent = ({tasks, user}: {tasks: taskProps[], user: UserProp
     // Get params
     const params = useParams()
 
-    // Task
-    const task =  tasks.find(task => task.id === params.id)
-
     // State 
-    const [taskValue, setTaskValue] = useState(task?.value)
+    const [task, setTask] = useState<taskProps>(tasks.find(task => task.id === params.id) as taskProps)
+
+    // State - inputFormEdit
+    const [inputFormEdit, setInputFormEdit] = useState<string>(task?.value as string)
+
+    // HandleEditTask
+    const handleEditTask = useCallback((e: FormEvent) => {
+        e.preventDefault();
+
+        if (inputFormEdit !== "") {
+            if (task?.value !== inputFormEdit) {
+            setTask(prev => ({
+                ...prev,
+                value: inputFormEdit
+            }));
+            }
+        }
+    }, [inputFormEdit, task, setTask]);
 
     const thisTaskIsLoggedUser = user.name === task?.author
-
+    
     return (
         <>
             {task?.isPublic ? (
@@ -37,11 +51,11 @@ export const TaskComponent = ({tasks, user}: {tasks: taskProps[], user: UserProp
                                 id="task" 
                                 cols={10} 
                                 rows={5}
-                                value={taskValue}
-                                onChange={(e) => setTaskValue(e.target.value)}
+                                value={inputFormEdit}
+                                onChange={(e) => setInputFormEdit(e.target.value)}
                             />
 
-                            {thisTaskIsLoggedUser && <button>Edit Task</button>}
+                            {thisTaskIsLoggedUser && <button onClick={handleEditTask}>Edit Task</button>}
                         </form>
                     </article>
 
