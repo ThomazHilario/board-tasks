@@ -22,6 +22,6 @@ jobs:
         run: node ai-review.js
         working-directory: ${{ github.workspace }}
         env:
-          GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
