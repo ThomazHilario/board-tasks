@@ -30,7 +30,8 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
                 id: crypto.randomUUID() as string,
                 value: inputValue,
                 isPublic: taskIsPublic,
-                comments: []
+                comments: [],
+                author: ""
             },
             ...tasks
         ])

@@ -2,6 +2,7 @@
   {
     "id": "1",
     "value": "Tarefa 1",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -17,6 +18,7 @@
   {
     "id": "2",
     "value": "Tarefa 2",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": [
       {
@@ -28,6 +30,7 @@
   {
     "id": "3",
     "value": "Tarefa 3",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -43,12 +46,14 @@
   {
     "id": "4",
     "value": "Tarefa 4",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": []
   },
   {
     "id": "5",
     "value": "Tarefa 5",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -60,6 +65,7 @@
   {
     "id": "6",
     "value": "Tarefa 6",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": [
       {
@@ -71,6 +77,7 @@
   {
     "id": "7",
     "value": "Tarefa 7",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -86,12 +93,14 @@
   {
     "id": "8",
     "value": "Tarefa 8",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": []
   },
   {
     "id": "9",
     "value": "Tarefa 9",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -103,6 +112,7 @@
   {
     "id": "10",
     "value": "Tarefa 10",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": [
       {
@@ -114,6 +124,7 @@
   {
     "id": "11",
     "value": "Tarefa 11",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -129,12 +140,14 @@
   {
     "id": "12",
     "value": "Tarefa 12",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": []
   },
   {
     "id": "13",
     "value": "Tarefa 13",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -146,6 +159,7 @@
   {
     "id": "14",
     "value": "Tarefa 14",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": [
       {
@@ -157,6 +171,7 @@
   {
     "id": "15",
     "value": "Tarefa 15",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {
@@ -172,12 +187,14 @@
   {
     "id": "16",
     "value": "Tarefa 16",
+    "author": "thomazrp",
     "isPublic": false,
     "comments": []
   },
   {
     "id": "17",
     "value": "Tarefa 17",
+    "author": "thomazrp",
     "isPublic": true,
     "comments": [
       {

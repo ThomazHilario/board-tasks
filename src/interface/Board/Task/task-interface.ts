@@ -1,6 +1,7 @@
 export interface taskProps {
     id: string,
     value: string,
+    author:string,
     isPublic: boolean,
     comments: CommentUserProps[]
 }
