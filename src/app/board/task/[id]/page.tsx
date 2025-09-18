@@ -10,6 +10,10 @@ import { Container } from "@/Components/ui/Container/Container";
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface";
+import { UserProps } from "@/interface/Board/board-user-props";
+
+// Supabase
+import { supabase } from "@/utils/supabase/server";
 
 export default async function Task() {
     
@@ -20,12 +24,14 @@ export default async function Task() {
         redirect('/')
     }
 
-    // Simulate request
-    const tasksUser = await new Promise<taskProps[]>(resolve => setTimeout(() => resolve(mock), 500));
+    const isUser: UserProps = session.user as UserProps
+
+    // Get tasks using user name
+    const tasksUser = await supabase.from('TasksUser').select().eq('author', session?.user?.name)
 
     return(
         <Container className="bg-white">
-            <TaskComponent tasks={tasksUser} />
+            <TaskComponent tasks={tasksUser.data as taskProps[]} user={isUser} />
         </Container>
     )
 }

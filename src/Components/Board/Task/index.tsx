@@ -2,50 +2,85 @@
 
 // Next
 import { useParams } from "next/navigation"
-import { useState } from "react"
+import { FormEvent, useCallback, useState } from "react"
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface"
+import { UserProps } from "@/interface/Board/board-user-props"
 
 // Style
 import style from '../board-content.module.css'
 
 
-export const TaskComponent = ({tasks}: {tasks: taskProps[]}) => {
+export const TaskComponent = ({tasks, user}: {tasks: taskProps[], user: UserProps}) => {
 
     // Get params
     const params = useParams()
 
-    // Task
-    const task =  tasks.find(task => task.id === params.id)
-
     // State 
-    const [taskValue, setTaskValue] = useState(task?.value)
+    const [task, setTask] = useState<taskProps>(tasks.find(task => task.id === params.id) as taskProps)
+
+    // State - inputFormEdit
+    const [inputFormEdit, setInputFormEdit] = useState<string>(task?.value as string)
+
+    // HandleEditTask
+    const handleEditTask = useCallback((e: FormEvent) => {
+        e.preventDefault();
+
+        if (inputFormEdit !== "") {
+            if (task?.value !== inputFormEdit) {
+            setTask(prev => ({
+                ...prev,
+                value: inputFormEdit
+            }));
+            }
+        }
+    }, [inputFormEdit, task, setTask]);
+
+    const thisTaskIsLoggedUser = user.name === task?.author
 
     return (
-        <section className="w-full h-full flex items-center flex-col gap-5">
-            <article className={style.formEditContainer}>
-                <form>
-                    <textarea 
-                        name="task" 
-                        id="task" 
-                        cols={10} 
-                        rows={5}
-                        value={taskValue}
-                        onChange={(e) => setTaskValue(e.target.value)}
-                    />
+        <>
+            {task?.isPublic || thisTaskIsLoggedUser ?  (
+                <section className="w-full h-full flex items-center flex-col gap-5">
+                    <article className={style.formEditContainer}>
+                        <form>
+                            <textarea 
+                                disabled={!thisTaskIsLoggedUser}
+                                name="task" 
+                                id="task" 
+                                cols={10} 
+                                rows={5}
+                                value={inputFormEdit}
+                                onChange={(e) => setInputFormEdit(e.target.value)}
+                            />
 
-                    <button>Edit Task</button>
-                </form>
-            </article>
+                            {thisTaskIsLoggedUser && <button onClick={handleEditTask}>Edit Task</button>}
+                        </form>
+                    </article>
 
-            <section>
-                <ul>
-                    {task?.comments.length && task.comments.map((comment, index) => (
-                        <li key={index}>{comment.comment}</li>
-                    ))}
-                </ul>
-            </section>
-        </section>
+                    <section className={style.formAddCommentContainer}>
+                        {!thisTaskIsLoggedUser && (
+                            <form>
+                                <textarea 
+                                    rows={5}
+                                />
+
+                                <button>Comentar</button>
+                            </form>
+                        )}
+                        <ul className={style.commentsContainer}>
+                            {task?.comments.length && task.comments.map((comment, index) => (
+                                <li key={index}>{comment.comment}</li>
+                            ))}
+                        </ul>
+                    </section>
+                </section>
+            ) : (
+                <section>
+                    do you not have access!
+                </section>
+            )}
+        </>
     )
 }
