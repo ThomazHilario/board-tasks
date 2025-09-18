@@ -38,10 +38,10 @@ export const TaskComponent = ({tasks, user}: {tasks: taskProps[], user: UserProp
     }, [inputFormEdit, task, setTask]);
 
     const thisTaskIsLoggedUser = user.name === task?.author
-    
+
     return (
         <>
-            {task?.isPublic ? (
+            {task?.isPublic || thisTaskIsLoggedUser ?  (
                 <section className="w-full h-full flex items-center flex-col gap-5">
                     <article className={style.formEditContainer}>
                         <form>

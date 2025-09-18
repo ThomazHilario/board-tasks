@@ -8,11 +8,15 @@ import { TasksSection } from "../tasksSection"
 
 // Interface
 import { taskProps } from "@/interface/Board/Task/task-interface"
+import { UserProps } from "@/interface/Board/board-user-props";
 
 // Css style
 import style from '../board-content.module.css'
 
-export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
+// Supabase
+import { supabase } from "@/utils/supabase/server";
+
+export const BoardContent = ({ tasksUser, user }: {tasksUser: taskProps[], user:UserProps}) => {
 
     const [tasks, setTasks] = useState(tasksUser)
 
@@ -22,25 +26,42 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
     // task is public
     const [taskIsPublic, setTaskIsPublic] = useState(false)
 
-    const handleAddTask = (e: FormEvent) => {
-        e.preventDefault()
-    
-        setTasks([
-            {
-                id: crypto.randomUUID() as string,
-                value: inputValue,
-                isPublic: taskIsPublic,
-                comments: [],
-                author: ""
-            },
-            ...tasks
-        ])
-
-        setInputValue('')
+    const handleAddTask = async (e: FormEvent) => {
+        try{
+            e.preventDefault()
+            if(inputValue !== ''){
+                const taskBody = {
+                    id: crypto.randomUUID() as string,
+                    value: inputValue,
+                    isPublic: taskIsPublic,
+                    comments: [],
+                    author: user.name!
+                }
+                setTasks([
+                    taskBody,
+                    ...tasks
+                ])
+                await supabase.from('TasksUser').insert(taskBody)
+                setInputValue('')
+            }   
+        }catch(e){
+            console.log(e)
+        }
     }
 
-    const handleRemoveTask = (id:string) => {
-        setTasks(tasks.filter(task => task.id !== id))
+    const handleRemoveTask = async (id:string) => {
+        try{
+            // Search task for delete
+            const deleteThisTask = tasks.find(task => task.id === id)
+
+            // Remove this task in state tasks
+            setTasks(tasks.filter(task => task.id !== deleteThisTask?.id))
+
+            // Remove from database
+            await supabase.from('TasksUser').delete().eq('id', deleteThisTask?.id)
+        }catch(e){
+            console.log(e)
+        }
     }
 
     return(
@@ -48,7 +69,7 @@ export const BoardContent = ({ tasksUser }: {tasksUser: taskProps[]}) => {
             <article className={style.createTaskContainer}>
                 <h2>Qual a sua tarefa ?</h2>
 
-                <form className={style.formAddTask} onSubmit={(e) => handleAddTask(e)}>
+                <form className={style.formAddTask} onSubmit={handleAddTask}>
                     <textarea 
                         rows={5}
                         cols={10}
